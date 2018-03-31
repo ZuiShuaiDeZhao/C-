@@ -1,0 +1,80 @@
+二叉树广度优先遍历
+void breadthFirst(){
+  Queue<BSTNode*>queue;
+  BSTNode *p=root;
+  if(p!=NULL){
+    queue.enqueue(p);
+    while(!queue.empty()){
+      p=queue.dequeue();
+      visit(p);
+      if(p->left!=NULL){
+        queue.enqueue(p->left);
+      }
+      if(p->right!=NULL){
+        queue.enqueue(q->right);
+      }
+    }
+  }
+}
+
+前序遍历
+void preOrder(BSTNode *root){
+  stack<BSTNode*>travStack;
+  BSTNode *p=root;
+  if(p!=NULL){
+    travStack.push(p);
+    while(!travStack.isempty()){
+      p=travStack.pop();
+      visit(p);
+      if(p->right!=NULL){
+        travStack.push(p->right);
+      }
+      if(p->left!=NULL){
+        travStack.push(p->left);
+      }
+    }
+  }
+}
+
+中序遍历
+void inOrder(){
+  if(root==NULL){
+    return;
+  }
+  BSTNode *p=root;
+  stack<BSTNode*>travStack;
+  while(p!=NULL||!travStack.empty()){
+    while(p!=NULL){
+      travStack.push(p);
+      p=p->left;
+    }
+    if(!travStack.empty()){
+      p=travStack.top();
+      visit(p);
+      travStack.pop();
+      p=p->right;
+    }
+  }
+}
+
+后序遍历
+void postOrder(BSTNode*root){
+  stack<BSTNode*>travStack;
+  BSTNode *p=root,*q=root;
+  while(p!=NULL){
+    for(;p->left!=NULL;p->left){
+      travStack.push(p);
+    }
+    while(p->right==NULL||p->right==q){
+      visit(p);
+      q=p;
+      if(travStack.empty()){
+        return;
+      }
+      p=travStack.pop();
+    }
+    travStack.push(p);
+    p=p->right;
+  }
+  
+}
