@@ -78,3 +78,23 @@ void postOrder(BSTNode*root){
   }
   
 }
+
+
+void inOrder(){
+  BSTNode *prev,*p=root;
+  if(p!=NULL){
+    while(p->left!=NULL){
+      p=p->left;
+    }
+    while(p!=NULL){
+      visit(p);
+      prev=p;
+      p=p->right;
+      if(P!=null&&prev->successor==0){
+        while(p->left!=NULL){
+          p=p->left;
+        }
+      }
+    }
+  }
+}
