@@ -1,0 +1,141 @@
+template <class T>
+struct  BTNode
+{
+    BTNode<T> *_lChild, *_rChild;
+    T element;
+    BTNode(const T &e) {
+        element = e;
+        _lChild = _rChild = NULL;
+    }
+};
+template <class T>
+class JBBinaryTree
+{    
+public:    
+    JBBinaryTree();
+    ~JBBinaryTree();
+    BTNode<T> *_root;
+    //清空当前树
+    void clear();
+    //获取到当前元素
+    T getElement()    const;
+    //判断当前二叉树是不是空二叉树
+    bool isEmpty()    const;
+    //构建一棵数
+    void makeTree(const T &x,JBBinaryTree<T> *left,JBBinaryTree<T> *right);
+    //拆除一棵数
+    void breakTree(T &x,JBBinaryTree*left,JBBinaryTree*right);
+    //前序遍历 统一采用递归遍历
+    void preOrder(BTNode<T> *t);
+    //中序遍历
+    void inOrder(BTNode<T> *t);
+    //后序遍历
+    void postOrder(BTNode<T> *t);
+};
+
+template <class T>
+JBBinaryTree<T>::JBBinaryTree()
+{
+    _root = NULL;
+}
+
+template<class T>
+JBBinaryTree<T>::~JBBinaryTree()
+{
+    clear();
+}
+
+template<class T>
+void JBBinaryTree<T>::clear() {
+　　if(_root==NULL){
+　　　　return;
+　　}    
+　　delete _root;
+    _root = NULL;
+}
+template<class T>
+T JBBinaryTree<T>::getElement() const {
+    if (isEmpty()) {
+        reurn NULL;
+    }
+    return _root->element;
+}
+template<class T>
+bool JBBinaryTree<T>::isEmpty() const {
+    return _root == NULL;
+}
+template<class T>
+void JBBinaryTree<T>::makeTree(const T &x, JBBinaryTree<T> *left, JBBinaryTree<T> *right) {
+    if (_root)return;//如果根节点不为空 就直接return 这实际上让用户操作起来十分不方便 不能自己构建自己 必须重一个节点
+    _root = new BTNode<T>(x);//实例化二叉树根节点
+    _root->_lChild = left->_root;//让左指针指向左子树的根节点
+    _root->_rChild = right->_root;//让右指针指向右子树的根节点
+    left->_root = right->_root = NULL;
+}
+template<class T>
+void JBBinaryTree<T>::breakTree(T &x, JBBinaryTree*left, JBBinaryTree*right) {
+    if (!_root || left == right || left->_root || right->_root) {
+        //若此树本身就是空的，或则用于承接的左右树本身一样，或则用于承接的左子树不为空都直接退出
+        return;
+    }
+    x = _root->element;//将这个树的根节点的元素域转移走
+    left->_root = _root->_lChild;//将左子树单独拆成一棵树
+    right->_root = _root->_rChild;//将右子树单独拆成一棵树
+    clear();
+}
+template<class T>
+void JBBinaryTree<T>::preOrder(BTNode<T> *t) {
+    if (t) {
+        printf("%d",t->element);
+        preOrder(t->_lChild);
+        preOrder(t->_rChild);
+    }
+}
+template<class T>
+void JBBinaryTree<T>::inOrder(BTNode<T> *t) {
+    if (t) {
+        inOrder(t->_lChild);
+        printf("%d",t->element);
+        inOrder(t->_rChild);
+    }
+}
+template<class T>
+void JBBinaryTree<T>::postOrder(BTNode<T> *t) {
+    if (t) {
+        postOrder(t->_lChild);
+        postOrder(t->_rChild);
+        printf("%d",t->element);
+    }
+}
+复制代码
+下面看一下主程序
+
+　　
+
+复制代码
+#include "stdafx.h"
+#include"stdlib.h"
+#include"JBQueue.h"
+#include"JBStack.h"
+#include"JBBinaryTree.h"
+
+int main()
+{
+    {
+        JBBinaryTree<int> L,R,a,b,c,d,e;
+        a.makeTree(0,&L,&R);
+        b.makeTree(1,&L,&R);
+        c.makeTree(2,&a,&b);
+        d.makeTree(3,&a,&b);
+        e.makeTree(4,&c,&d);
+        printf("前序遍历：");
+        e.preOrder(e._root);
+        printf("\n中序遍历：");
+        e.inOrder(e._root);
+        printf("\n后序遍历：");
+        e.postOrder(e._root);
+        printf("\n");
+    }
+    system("pause");
+    return 0;
+}
