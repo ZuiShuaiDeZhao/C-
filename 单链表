@@ -1,5 +1,4 @@
-# C++
-数据结构
+
 单链表的建立插入删除：
 class node{
 public:
