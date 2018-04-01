@@ -149,3 +149,27 @@ int main() {
         cout << "删除链表失败！" << endl;  
   
     return 0; 
+
+
+
+
+
+链表的逆置：
+void reverse(listLink *head){
+	if(head->next==NULL){
+		return ;
+	}
+	if(head->next->next==NULL){
+		return;
+	}
+	ListNode* pRev = NULL;
+    ListNode* pCur = pHead;
+    while(pCur != NULL)
+    {
+        ListNode* pTemp = pCur;   // 步骤①
+        pCur = pCur->pNext;       // 步骤②
+        pTemp->pNext = pRev;      // 步骤③
+        pRev = pTemp;
+    }
+    return pRev;
+}
