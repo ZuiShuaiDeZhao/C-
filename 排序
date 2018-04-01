@@ -72,3 +72,125 @@ void shellsort(int a[], int n)
 			for (j = i - gap; j >= 0 && a[j] > a[j + gap]; j -= gap)
 				Swap(a[j], a[j + gap]);
 }
+
+
+
+堆排序：
+堆是具有以下两个属性的二叉树：
+每个节点的值不会小于其子节点的值；
+树是完全平衡的，最底层的叶子节点都位于最左边的位置。
+void MaxHeapFixDown(int a[], int i, int n){
+     int j = 2*i+1;
+     int temp = a[i];
+     while(j<n){
+         if(j+1<n&&a[j]<a[j+1])
+             ++j;
+         if(temp>a[j])
+             break;
+        else{
+            a[i]=a[j];
+            i=j;
+            j=2*i+1;
+        }
+    }
+    a[i]=temp;
+}
+
+//堆排序
+void HeapSort(int a[], int n){
+    for(int i= n/2-1;i>=0;i--)
+        MaxHeapFixDown(a,i,n);
+    for(int i=n-1;i>=1;i--){
+        swap(a[i],a[0]);
+        MaxHeapFixDown(a,0,i);
+    }
+}
+
+
+快速排序：
+void QuickSort(int a[], int l,int r){
+     if(l<r){
+         int i=l,j=r,temp=a[l];
+         while(i<j){
+             while(i<j&&temp<=a[j])
+                 --j;
+             if(i<j)
+                 a[i++]=a[j];
+ 
+             while(i<j&&temp>a[i])
+                 ++i;
+             if(i<j)
+                 a[j--]=a[i];
+         }
+         a[i]=temp;
+         QuickSort(a,l,i-1);
+         QuickSort(a,i+1,r);
+     }
+ }
+ 
+ 
+ 归并排序：
+ void mergeSort(int *a,int lo,int hi){
+ 	if((hi-lo)<2){
+	return ;
+	}
+	int mi=(lo+hi)>>1;
+	mergeSort(a,lo,mi);
+	mergeSort(a,mi,hi);
+	merge(a,lo,mi,hi);
+ }
+ void merge(int *a,int lo,int mi,int hi){
+ 	int *A=a+lo;
+	int lb=mi-lo;
+	int *B=new int[lb];
+	for(int i=0;i<lb;i++){
+		B[i]=A[i];
+	}
+	int lc=hi-mi;
+	int *C=a+mi;
+	for(int i=0,j=0,k=0;(j<lb)||(k<lc);){
+		if((j<lb)&&(!(k<lc)||B[j]<C[k])){
+			A[i++]=B[j++];
+			}
+		if((k<lc)&&(!(j<lb)||C[k]<B[j])){
+			A[i++]=C[k++];
+		}
+	}
+	delete[]B;
+ }
+ 
+ fibonacci:
+ int fibI(int n){
+ 	int f=0;g=1;
+	while(n-->0){
+		g+=f;
+		f=g-f;
+	}
+	return f;
+ }
+ 
+二分查找：
+void search(int *a,int e,int lo,int hi){
+	while(hi-lo>1){
+		int mi=(lo+hi)>>1;
+		(e<a[mi])?hi=mi:lo=mi;
+		
+	}
+	return (e==a[lo])?lo::-1;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 数组倒置：
+ void reverse(int a[],int lo,int hi){
+ 	while(lo<hi){
+	swap(a[lo++],a[hi--]);
+	}
+ }
