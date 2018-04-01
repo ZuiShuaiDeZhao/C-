@@ -59,3 +59,16 @@ void bubbleSort(T data[],int n){
 
 
 Shell排序：
+Shell排序的执行时间依赖于增量序列。
+好的增量序列的共同特征：
+① 最后一个增量必须为1；
+② 应该尽量避免序列中的值(尤其是相邻的值）互为倍数的情况。
+有人通过大量的实验，给出了目前较好的结果：当n较大时，比较和移动的次数约在n到1.6n之间
+void shellsort(int a[], int n)
+{
+	int i, j, gap;
+	for (gap = n / 2; gap > 0; gap /= 2)
+		for (i = gap; i < n; i++)
+			for (j = i - gap; j >= 0 && a[j] > a[j + gap]; j -= gap)
+				Swap(a[j], a[j + gap]);
+}
